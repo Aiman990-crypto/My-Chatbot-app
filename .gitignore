@@ -9,6 +9,8 @@ lerna-debug.log*
 
 # Runtime secrets
 .env
+# Secret credentials
+backend/chatbot-credentials.json
 
 node_modules
 dist
