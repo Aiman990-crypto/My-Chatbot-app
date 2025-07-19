@@ -8,11 +8,12 @@ const app = express();
 
 const port = 5000;
 require('dotenv').config();
+console.log("Using OpenAI key:", process.env.OPENAI_API_KEY);
 const multer = require('multer');
 
 const upload = multer({ dest: 'uploads/' });
 const { exec } = require('child_process');
-const fs = require('fs');
+const fs = require('fs')
 
 // PostgreSQL connection pool
 const pool = new Pool({
@@ -69,6 +70,47 @@ app.post('/transcribe', upload.single('audio'), (req, res) => {
     res.send({ transcript: stdout.trim() });
   });
 });
+const { ChatOpenAI } = require("@langchain/openai");
+const { HumanMessage } = require("@langchain/core/messages");
+
+
+
+const chatModel = new ChatOpenAI({
+  temperature: 0.7,
+  modelName: "gpt-3.5-turbo", // or your model
+  openAIApiKey: process.env.OPENAI_API_KEY
+});
+
+// POST /chat route
+app.post('/chat', async (req, res) => {
+  const { message, userId } = req.body;
+
+  if (!message || !userId) {
+    return res.status(400).json({ error: 'Missing message or userId' });
+  }
+
+  try {
+    // Send user message to OpenAI
+    const result = await chatModel.call([
+      new HumanMessage(message)
+    ]);
+
+    const botReply = result.text;
+
+    // ✅ Save both messages to the database
+    await pool.query(
+      'INSERT INTO messages (user_id, content, role) VALUES ($1, $2, $3), ($1, $4, $5)',
+      [userId, message, 'user', botReply, 'assistant']
+    );
+
+    res.json({ response: botReply });
+  } catch (err) {
+    console.error("Chat error:", err);
+    res.status(500).json({ error: "Internal chatbot error" });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

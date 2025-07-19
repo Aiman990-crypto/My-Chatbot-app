@@ -8,6 +8,7 @@ import VoiceRecorder from './components/VoiceRecorder';
 import './App.css';
 
 function App() {
+  const [chatbotReply, setChatbotReply] = useState("");
   const [messages, setMessages] = useState([]); // Chat messages
   const [input, setInput] = useState(''); // User's input
   const [loading, setLoading] = useState(false); // AI is generating response
@@ -282,7 +283,7 @@ const clearChat = async () => {
 </div>
 <div>
       
-      <VoiceRecorder />
+      <VoiceRecorder chatbotReply={chatbotReply} setChatbotReply={setChatbotReply} />
     </div>
 
     </div>
