@@ -2,7 +2,7 @@
 This is a full-stack AI-powered voice chatbot application that enables users to speak directly to an AI assistant using their microphone. The app uses Whisper (Python) for voice-to-text transcription and OpenAI's GPT API for generating intelligent responses. Built with a React frontend and Node.js/Python backend.
 
 ✨ Features
-🎤 Voice Input using microphone (record & send)
+🎤 Voice Input using microphone 
 🧠 AI Chatbot Responses powered by OpenAI
 🗣️ Speech Transcription via Python + Whisper
 🔁 Real-time communication with backend
