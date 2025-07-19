@@ -21,8 +21,8 @@ Audio:	MediaRecorder API
 🛠️ Installation
 1. Clone the Repository
 
-git clone https://github.com/Aiman990-crypto/My-Chatbot--app.git
-cd My-Chatbot--app
+git clone https://github.com/Aiman990-crypto/My-Chatbot-app.git
+cd My-Chatbot-app
 2. Set up Python Backend
 3. Set up PostgreSQL
 4. Set up Node Server
